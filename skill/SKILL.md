@@ -7,7 +7,7 @@ description: Turn a request (even a one-line idea) into a structured kickoff pro
 
 From Felix Rieseberg, "How to be more ambitious: a tutorial for humans with models" (felixrieseberg.com): ambition comes as Speed, Altitude, Depth and Range. Speed is the default already; this skill runs the rest and ends in a plan the owner says yes to.
 
-This is planning, not building. Stay in plan mode (call `EnterPlanMode` if not in it) and change no files until the owner approves the plan at the ready gate (§ 6).
+For a build, this is planning, not building. Stay in plan mode (call `EnterPlanMode` if not in it) and change no files until the owner approves the plan at the ready gate (§ 6).
 
 ## 1. Kickoff: turn the ask into a structured prompt
 
@@ -15,7 +15,7 @@ A one-line idea becomes the kickoff a top professional in that field would want 
 
 > I want a deeper version of this task, not a bigger one. Before rewriting it: (1) say what a top professional in this field would do here that I'm not asking for; (2) name the rawest material they would start from instead of what has already been digested for me; (3) name the specific methods and tools they would use; (4) say what, other than you or me, would show the result is right. Then rewrite my prompt to ask for exactly that.
 
-The rewrite is the kickoff. Fill every slot from this ask, the code, logs, history and what the owner said; the examples below only show the shape, never content to reuse. Mark any slot only the owner can fill and ask it in § 2:
+The rewrite is the kickoff. Fill every slot from this ask, the code, logs, history and what the owner said; the examples below only show the shape, never content to reuse. Mark any slot only the owner can fill and ask it in § 2. Where you don't know the field well enough to name a real source, tool or method, say so and mark it to check in § 3 rather than inventing one:
 - **Who's asking, and what they're not**: their expertise and the field they're stepping into (e.g. "a game designer, not a network engineer").
 - **The honesty line**: what the result is not, and that it must say so (e.g. "a prototype, not a security review").
 - **Outcome**, verbs first in the owner's plain words: what should be true once it's done (e.g. "make repeat requests come back instantly, and never hand back a stale result"). A technical term only where no plain word carries its meaning.
@@ -23,10 +23,12 @@ The rewrite is the kickoff. Fill every slot from this ask, the code, logs, histo
 - **The first step everything depends on.**
 - **Constraints**: stack, licences, machines, budget.
 - **One vertical slice, deep, not wide**: numbered steps. For each: the raw data (and where to get it), the method, the specific tools, and **what to leave out of v1, and why**.
-- **Judges that don't depend on the owner or the model**: e.g. published reference cases, a second independent method, a backtest on held-out data, real-world measurements, an expert reviewer in the field.
+- **Judges that don't depend on the owner or the model**, each with the result that passes and the result that fails: e.g. published reference cases, a second independent method, a backtest on held-out data, real-world measurements, an expert reviewer in the field.
 - **Where it's likely to overclaim**: what should lower confidence, and where a simpler method is good enough.
 
 Show the owner the kickoff; it stands on its own (they can paste it into another session). If its outcome is one they'd agree with, move on; if not (they're mid back-and-forth, the ask is a fragment, two outcomes compete), interview (§ 2).
+
+If the ask isn't a build (a question, research, a doc), stop at the kickoff: offer in one line to run it, and run it only on the owner's yes.
 
 ## 2. Interview, only when the outcome is unclear or the owner asks
 
@@ -81,7 +83,7 @@ Shape: <single thread | subagent | workflow, with the step/agent sketch>
 <self-contained, absolute paths, ready for a builder>
 
 ### Done bar
-<the § 3 (4) judge as a command or real run, with the pass condition>
+<the § 3 (4) judge as a command or real run, with the pass condition and what counts as a fail>
 ```
 
 Then the ready gate: present the plan with `ExitPlanMode` (or, outside plan mode, a yes / keep planning / type-something choice). Nothing is built before the owner's yes. On yes: put the done bar on the task (TASKS.md or wherever tasks live), route the build by your routing rules (a runnable done bar is the check any builder can be held to), and turn each owner-only item under Access into one plain ask (the `wizard` skill, if installed, for multi-step setup).
