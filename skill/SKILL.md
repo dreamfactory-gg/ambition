@@ -1,6 +1,6 @@
 ---
 name: ambition
-description: Turn a request (even a one-line idea) into a structured kickoff prompt, then a deeper brief, a done bar and the right shape (single thread, subagent or workflow) before anything is built. Use it at every kickoff (feature, project, unit, refactor, research), whenever the owner throws in a new idea mid-session, when a pair-programming back-and-forth has lost its end goal, or when the owner says "deeper", "more ambitious", "what would a pro do" or hands over a one-line idea, even if they don't name the skill. Skip bugs that already have a repro (they route straight to grunt) and changes of a few lines you already hold.
+description: Turn a request (even a one-line idea) into a structured kickoff prompt, then a deeper brief, a done bar and the right shape (single thread, subagent or workflow) before anything is built. Use it at every kickoff (feature, project, unit, refactor, research), whenever the owner throws in a new idea mid-session, when a pair-programming back-and-forth has lost its end goal, or when the owner says "deeper", "more ambitious", "what would a pro do" or hands over a one-line idea, even if they don't name the skill. Skip bugs that already have a repro (fix those directly) and changes of a few lines you already hold.
 ---
 
 # Ambition
@@ -38,7 +38,7 @@ Show the owner the kickoff; it stands on its own (they can paste it into another
 
 ## 3. Depth: ground the kickoff in what's real
 
-- (2) Look for the raw material yourself (logs, the real database, git history, `tokenmaxxing recall`, the live app or Studio), and fold anything only the owner holds into § 2.
+- (2) Look for the raw material yourself (logs, the real database, git history, past session transcripts, the live app), and fold anything only the owner holds into § 2.
 - (3) The tools a pro reaches for (profiler, SQL, a statistical test, a simulation, a type checker), with a demanding target where one fits (200 ms, not "fast"). Test the task's own assumption against the raw material before building on it.
 - Before planning, find what already exists: earlier evals, judges, scripts and their results (the repo's `evals/`, REPORT.md, the code under test). Search for it yourself; an explorer can miss it. A plan that rebuilds an existing eval is the failure here.
 - Report the assumption test's number with the measured error of whatever produced it (a regex, a model, a heuristic). An unmeasured judge's verdict is a hypothesis: measure the judge on a blind sample before the number reaches the owner.
@@ -52,10 +52,10 @@ The lenses usually live in this one context. Give a lens its own agent only when
 
 ## 5. Shape: single thread, subagent or workflow
 
-Decide; don't ask by default. Sketch the likely shape from the router in `~/.claude/CLAUDE.md` § Models, rough and open to change as decisions land:
+Decide; don't ask by default. Sketch the likely shape, using the model-routing rules in your CLAUDE.md if it has them (which model or tool builds, reviews, grades), rough and open to change as decisions land:
 - **Single thread**: small, or every step depends on the last and the reading is light.
 - **Subagent**: one separable job (a sweep, a build packet, a review) whose dumps would bloat this context.
-- **Workflow**: 2+ independent pieces, or stages (explore → build → review → grade) each heavy enough to flood one context. Name each step's agent, e.g. explore: 2× `tokenmaxxing:explorer`; build: grunt `--kind feature`; review: `grunt review --tier critical`; grade: one Opus high.
+- **Workflow**: 2+ independent pieces, or stages (explore → build → review → grade) each heavy enough to flood one context. Name each step's agent, e.g. explore: 2 read-only explorer agents; build: one builder held to the done bar; review: an independent reviewer; grade: one strong model.
 
 A workflow runs only on the owner's yes, which the ready gate collects. If the owner asks for a workflow, weigh it honestly; say so when it's really one subagent's job. No cost estimates (subscription quota, not API spend).
 
@@ -84,7 +84,7 @@ Shape: <single thread | subagent | workflow, with the step/agent sketch>
 <the § 3 (4) judge as a command or real run, with the pass condition>
 ```
 
-Then the ready gate: present the plan with `ExitPlanMode` (or, outside plan mode, a yes / keep planning / type-something choice). Nothing is built before the owner's yes. On yes: put the done bar on the TASKS.md item, route the build by § Models (a runnable done bar is the pre-written check grunt needs), and turn each owner-only item under Access into one plain ask (the `wizard` skill, if installed, for multi-step setup).
+Then the ready gate: present the plan with `ExitPlanMode` (or, outside plan mode, a yes / keep planning / type-something choice). Nothing is built before the owner's yes. On yes: put the done bar on the task (TASKS.md or wherever tasks live), route the build by your routing rules (a runnable done bar is the check any builder can be held to), and turn each owner-only item under Access into one plain ask (the `wizard` skill, if installed, for multi-step setup).
 
 ## 7. New ideas and discoveries
 
